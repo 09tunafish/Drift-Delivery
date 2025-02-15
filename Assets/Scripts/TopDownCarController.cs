@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TopDownCarController : MonoBehaviour
@@ -107,5 +109,10 @@ public class TopDownCarController : MonoBehaviour
     {
         steeringInput = inputVector.x;
         accelerationInput = inputVector.y;
+    }
+
+    public float GetVelocityMagnitude()
+    {
+        return carRigidbody2D.linearVelocity.magnitude;
     }
 }
