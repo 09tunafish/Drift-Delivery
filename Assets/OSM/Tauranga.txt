@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="Overpass API 0.7.62.5 1bd436f1">
+<note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
+<meta osm_base="2025-02-15T09:50:45Z"/>
+
+  <node id="9694575316" lat="-37.6841158" lon="176.1702067">
+    <tag k="amenity" v="drinking_water"/>
+    <tag k="fountain" v="bubbler"/>
+  </node>
+  <node id="12586245753" lat="-37.6983173" lon="176.1657043">
+    <tag k="amenity" v="drinking_water"/>
+    <tag k="fountain" v="bubbler"/>
+  </node>
+  <node id="12586523266" lat="-37.6981981" lon="176.1647434">
+    <tag k="amenity" v="drinking_water"/>
+    <tag k="man_made" v="water_tap"/>
+  </node>
+
+</osm>
