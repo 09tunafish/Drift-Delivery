@@ -36,6 +36,7 @@ public class TopDownCarController : MonoBehaviour
             hasBox = true;
             Destroy(other.gameObject); 
             Debug.Log("Box picked up!");
+            spawnManager.BoxPickedUp();
         }
 
         if (other.CompareTag("DeliveryPoint") && hasBox)

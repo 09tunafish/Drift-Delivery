@@ -3,12 +3,12 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject boxPrefab;
-    public GameObject deliveryPointPrefab;
-    public Vector2 spawnAreaMin;
-    public Vector2 spawnAreaMax;
+    public Transform[] deliveryPoints; // Predefined delivery points
 
     private GameObject currentBox;
     private GameObject currentDeliveryPoint;
+    private int currentDeliveryIndex = 0;
+    public ArrowIndicator arrowIndicator;
 
     private void Start()
     {
@@ -17,22 +17,28 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnBoxAndDeliveryPoint()
     {
-        Vector2 boxPosition = new Vector2(Random.Range(spawnAreaMin.x, spawnAreaMax.x), Random.Range(spawnAreaMin.y, spawnAreaMax.y));
+        Vector2 boxPosition = new Vector2(Random.Range(-348f, 371f), Random.Range(-163f, 244f));
         currentBox = Instantiate(boxPrefab, boxPosition, Quaternion.identity);
 
-        Vector2 deliveryPosition;
-        do
-        {
-            deliveryPosition = new Vector2(Random.Range(spawnAreaMin.x, spawnAreaMax.x), Random.Range(spawnAreaMin.y, spawnAreaMax.y));
-        } while (Vector2.Distance(boxPosition, deliveryPosition) < 2.0f);
+        currentDeliveryPoint = Instantiate(deliveryPoints[currentDeliveryIndex].gameObject, deliveryPoints[currentDeliveryIndex].position, Quaternion.identity);
 
-        currentDeliveryPoint = Instantiate(deliveryPointPrefab, deliveryPosition, Quaternion.identity);
+        currentDeliveryIndex = (currentDeliveryIndex + 1) % deliveryPoints.Length;
+        arrowIndicator.SetTarget(currentBox.transform);
     }
 
     public void BoxDelivered()
     {
         Destroy(currentBox);
         Destroy(currentDeliveryPoint);
+
+        arrowIndicator.SetTarget(null);
+
         SpawnBoxAndDeliveryPoint();
+    }
+
+    public void BoxPickedUp()
+    {
+        arrowIndicator.SetTarget(currentDeliveryPoint.transform);
+        Debug.Log("PickedUp");
     }
 }
