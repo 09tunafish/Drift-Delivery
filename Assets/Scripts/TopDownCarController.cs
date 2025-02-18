@@ -9,6 +9,8 @@ public class TopDownCarController : MonoBehaviour
     public float accelerationFactor = 30.0f;
     public float turnFactor = 3.5f;
     public float maxSpeed = 20;
+    private bool hasBox = false;
+    private SpawnManager spawnManager;
 
     float accelerationInput = 0;
     float steeringInput = 0;
@@ -22,16 +24,26 @@ public class TopDownCarController : MonoBehaviour
         carRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        
+        spawnManager = FindObjectOfType<SpawnManager>();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.CompareTag("Box") && !hasBox)
+        {
+            hasBox = true;
+            Destroy(other.gameObject); 
+            Debug.Log("Box picked up!");
+        }
+
+        if (other.CompareTag("DeliveryPoint") && hasBox)
+        {
+            hasBox = false;
+            Debug.Log("Box delivered!");
+            spawnManager.BoxDelivered();
+        }
     }
 
     void FixedUpdate()
@@ -98,6 +110,12 @@ public class TopDownCarController : MonoBehaviour
             isBraking = true;
             return true;
         }
+
+        if (accelerationInput > 0 && velocityVsUp == 0)
+        return true;
+
+        if (accelerationInput > 0 && velocityVsUp < 0)
+        return true;
 
         if (Mathf.Abs(GetLateralVelocity()) >4.0f)
         return true;
