@@ -24,11 +24,13 @@ public class TopDownCarController : MonoBehaviour
         carRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
+    [System.Obsolete]
     private void Start()
     {
         spawnManager = FindObjectOfType<SpawnManager>();
     }
-    
+
+    [System.Obsolete]
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Box") && !hasBox)
@@ -80,10 +82,10 @@ public class TopDownCarController : MonoBehaviour
 
     void ApplySteering()
     {
-        float minSpeedBeforeAllowingTurningFactor = (carRigidbody2D.linearVelocity.magnitude / 8);
-        minSpeedBeforeAllowingTurningFactor = Mathf.Clamp01(minSpeedBeforeAllowingTurningFactor);
+        float minTurnSpeed = (carRigidbody2D.linearVelocity.magnitude / 8);
+        minTurnSpeed = Mathf.Clamp01(minTurnSpeed);
         
-        rotationAngle -= steeringInput * turnFactor * minSpeedBeforeAllowingTurningFactor;
+        rotationAngle -= steeringInput * turnFactor * minTurnSpeed;
 
         carRigidbody2D.MoveRotation(rotationAngle - 90f);
     }

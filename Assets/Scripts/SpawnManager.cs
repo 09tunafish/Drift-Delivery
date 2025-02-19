@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject boxPrefab;
-    public Transform[] deliveryPoints; // Predefined delivery points
+    public Transform[] deliveryPoints;
 
     private GameObject currentBox;
     private GameObject currentDeliveryPoint;
@@ -26,8 +26,11 @@ public class SpawnManager : MonoBehaviour
         arrowIndicator.SetTarget(currentBox.transform);
     }
 
+    [System.Obsolete]
     public void BoxDelivered()
     {
+        FindObjectOfType<ScoreManager>().AddScore(1);  
+
         Destroy(currentBox);
         Destroy(currentDeliveryPoint);
 
